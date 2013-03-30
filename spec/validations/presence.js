@@ -1,16 +1,15 @@
 describe("Test for presence", function(){
 
-	var User, user;
-
-	beforeEach(function(){
-		User = Backbone.Model.extend({
+	var User = Backbone.Model.extend({
 			validates: {
 				first_name: {
 					presence: true
 				}
 			}
-		});
-		
+		}), 
+		user;
+
+	beforeEach(function(){
 		user  = new User();
 	});
 	
