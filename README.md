@@ -5,6 +5,8 @@ This is a light weight add-on to the Backbone.js framework that provides declara
 
 In keeping with the spirit of Backbone.js, this add-on is un-opinionated in its approach to validation.
 
+In an attempt to operate within the confines of a quasi-MVC architectural pattern, this add-on only provides model level validation and does not offer an API that can be used to manipulate views. It does however, expose an ```errors``` object that can be used as necessary.
+
 Usage
 -----
 ```
@@ -38,54 +40,69 @@ A more comprehensive set of validations will be added in due course.
 Custom Extensions
 -----------------
 
-Each validation has an associated helper method of the same name. The existing helper methods can be overridden as well as new helpers defined to support other custom validations.
-
-
-To implement new validations:
+To implement new validation types you need only provide a custom regular expression:
 
 ```
-var helpers = {
-	phone: function(){
-		// Custom validation logic
+var patterns = {
+	phone: /\s*(\d{3})-(\d{3})-(\d{4})\s*/g    //This is a contrived example
 	}
 };
 ```
-Extend the existing helpers:
+The patters hash then needs to be extended as follows:
 
 ```
-_.extend(User.helpers, helpers);
+_.extend(User.patterns, patterns);
 
 ```
 
-And using the newly defined validation:
+And using the newly defined validation type:
 
 ```
-var Model = Backbone.Model.extend({
+var User = Backbone.Model.extend({
 
 	validates: {
 		phone_number: {
 			presence: true,
-			type: "phone" // This value must be the same as the defined helper
+			type: "phone" // This value must be the same as the defined pattern key
 		}
 	}
 	
 });
 
 ```
-Additionally the regular expressions defined for the the existing validations can also be overridden. 
 
-To implement custom patterns:
+Addtionally you can also add custom validation helpers. The helpers defined must return a boolean value. Helpers are passed the current attribute value as well as the desired attribute value configured in the ```validates``` hash.
 
-```
-var patterns = {
-	text: /some new pattern/gi
-}
+Example:
 
 ```
-Extend the existing patterns:
+helpers = {
+	range: function(provided, desired){
+		//return boolean value
+	}
+};
+	
+```
+The helpers hash then needs to be extended as follows:
 
 ```
-_.extend(User.patterns, patterns);
+_.extend(User.helpers, helpers)
+
+```
+
+The custom helper can then be used as follows:
+
+```
+var User = Backbone.Model.extend({
+	
+	validates: {
+		age: {
+			presence: true,
+			range: [18-75]
+		}
+	}
+	
+});
 
 ```
 
@@ -107,7 +124,7 @@ The structure of the errors object is as follows:
 }
 
 ```
-The ```errors``` object is also passed to the callback of bound to the ```invalid``` event that is triggered by the model.
+The ```errors``` object is also passed to callbacks bound to the ```invalid``` event triggered by the model.
 
 An example of how the ```errors``` object can be used in a view:
 
@@ -128,3 +145,5 @@ var UserView = Backbone.View.extend({
 });
 
 ```
+
+Copyright &copy; Aditya Manohar Licensed under the MIT License
