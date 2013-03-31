@@ -33,4 +33,10 @@ describe("Test for presence", function(){
 		expect(user.isValid()).toBeFalsy();
 	});
 	
+	it("should return default error message", function(){
+		user.set({first_name: ""});
+		user.isValid();
+		expect(user.validationError.first_name.presence).toEqual("Invalid first name");
+	});
+	
 })	
