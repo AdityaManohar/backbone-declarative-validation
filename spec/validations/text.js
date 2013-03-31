@@ -28,6 +28,12 @@ describe("Test for type TEXT", function(){
 		expect(user.isValid()).toBeFalsy();
 	});
 	
+	it("should not allow only whitespace strings", function(){
+		user.set({first_name: "    "});
+		expect(user.isValid()).toBeFalsy();
+	});
+	
+	
 	it("should allow whitespace at the beginning of the sentence", function(){
 		user.set({first_name: "   fox"});
 		expect(user.isValid()).toBeTruthy();
@@ -47,5 +53,11 @@ describe("Test for type TEXT", function(){
 		user.set({first_name: "the quick brown fox"});
 		expect(user.isValid()).toBeTruthy();
 	}); 
+	
+	it("should use the custom pattern", function(){
+		user.validates.first_name.using = /^(\s*([A-Za-z0-9]+)\s*)+$/i;
+		user.set({first_name: "foobar2013"});
+		expect(user.isValid()).toBeTruthy();
+	});
 
 });
