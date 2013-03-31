@@ -20,7 +20,9 @@
 				
 			},
 			presence : function(source, bool) {
-				if (source === null || typeof source === "undefined") return false;
+				if (source === null || typeof source === "undefined") {
+					return false;
+				}
 					
 				// Trim the string before checking for presence
 				return !!source.replace(/^\s+|\s+$/g, "") === bool;
@@ -31,7 +33,7 @@
 		},
 
 		validate : function(attrs) {
-			var validations = this.validates, attributes = attrs, prop, stack, empty, errors, fieldName;
+			var validations = this.validates, attributes = attrs, prop, stack, fieldName;
 
 			if (validations) {
 				if (!!!this.errors) {
@@ -39,31 +41,33 @@
 				}
 				// Iterate over all the declared fields
 				for (var v in validations) {
-					// Initialize key for error
-					if (!!!this.errors[v]) {
-						this.errors[v] = {};
-					}
-					// Source value
-					prop = attributes[v];
-					fieldName = v.replace(/_/, "");
-					// Declarative validations for a particular field
+					if( validations.hasOwnProperty(v)) {
+						// Initialize key for error
+						if (!!!this.errors[v]) {
+							this.errors[v] = {};
+						}
+						// Source value
+						prop = attributes[v];
+						fieldName = v.replace(/_/, " ");
+						// Declarative validations for a particular field
 					
-					stack = validations[v];
-					for (var s in stack){
-						if(this.helpers[s]){
-							if(!this.helpers[s].call(this, prop, stack[s], stack.using)){
-								this.errors[v][s] = stack.msg || "Invalid " + fieldName;
-							} else {
-								if (!!this.errors[v][s]) {
-								// Delete validation type and error message if valid
-								delete this.errors[v][s];
+						stack = validations[v];
+						for (var s in stack){
+							if(this.helpers[s]){
+								if(!this.helpers[s].call(this, prop, stack[s], stack.using)){
+									this.errors[v][s] = stack.msg || "Invalid " + fieldName;
+								} else {
+									if (!!this.errors[v][s]) {
+										// Delete validation type and error message if valid
+										delete this.errors[v][s];
+									}
 								}
-							}
-						} 
-					}
-					// Delete field name if no errors
-					if (_.isEmpty(this.errors[v])) {
-						delete this.errors[v];
+							} 
+						}
+						// Delete field name if no errors
+						if (_.isEmpty(this.errors[v])) {
+							delete this.errors[v];
+						}
 					}
 				}
 			}
