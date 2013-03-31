@@ -27,9 +27,9 @@ var User = Backbone.Model.extend({
 });
 ```
 
-Validations
+Validation types
 -----------
-Currently the validations supported are
+Currently the validation types supported are
 
 * text
 * email
@@ -37,7 +37,7 @@ Currently the validations supported are
 
 A more comprehensive set of validations will be added in due course.
 
-Custom Extensions
+Extending Types
 -----------------
 
 To implement new validation types you need only provide a custom regular expression:
@@ -71,7 +71,33 @@ var User = Backbone.Model.extend({
 
 ```
 
-Addtionally you can also add custom validation helpers. The helpers defined must return a boolean value. Helpers are passed the current attribute value as well as the desired attribute value configured in the ```validates``` hash.
+It is also possible to provide a custom pattern for an existing type or a new type with the ```using``` property.
+
+```
+var User = Backbone.Model.extend({
+	
+	validates: {	
+		first_name: {
+			type: "text",
+			using: /^(\s*([a-zA-Z0-9]+)\s*)$/gi
+		}
+	}
+	
+});
+
+```
+Or after object initialization:
+
+```
+var user = new User();
+user.validates.first_name.using = /^(\s*([a-zA-Z0-9]+)\s*)$/gi
+
+```
+
+Extending Helpers
+-----------------
+
+You can also add custom validation helpers. The helpers defined must return a boolean value. Helpers are passed the current attribute value as well as the desired attribute value configured in the ```validates``` hash.
 
 Example:
 
@@ -106,7 +132,7 @@ var User = Backbone.Model.extend({
 
 ```
 
-Dealing with validation errors
+Handling validation errors
 ------------------------------
 
 If a validation fails for a particular field then the the validate method returns an ```errors``` object which is automagically assigned to the ```validationErrors``` property of the model. 
