@@ -18,6 +18,11 @@ describe("Test for type EMAIL", function(){
 		expect(user.isValid()).toBeTruthy();
 	});
 	
+	it("should allow padded strings", function(){
+		user.set({email: "   foo@bar.com   "});
+		expect(user.isValid()).toBeTruthy();
+	});
+	
 	it("should not allow only whitespace strings", function(){
 		user.set({email: "    "});
 		expect(user.isValid()).toBeFalsy();

@@ -4,14 +4,15 @@
 	var validator = {
 
 		patterns : {
-			email : /^$|^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-			number : /^$|^\d+$/,
+			email : /^$|^\s*([(A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})\s*$/i,
+			number : /^$|^\s*(\d*(\.\d+)?)\s*$/,
 			text : /^$|^(\s*([A-Za-z]+)\s*)+$/i
 		},
 
 		// One helper for each validation type
 		helpers : {
 			type : function(source, type, pattern) {
+				source.toString().replace(/^\s+|\s+$/g, "")
 				if(pattern){
 					return pattern.test(source);
 				} else {

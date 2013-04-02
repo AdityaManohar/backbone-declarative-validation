@@ -33,6 +33,11 @@ describe("Test for type TEXT", function(){
 		expect(user.isValid()).toBeTruthy();
 	});
 	
+	it("should allow padded strings", function(){
+		user.set({first_name: "   foo   "});
+		expect(user.isValid()).toBeTruthy();
+	});
+	
 	it("should allow single characters", function(){
 		user.set({first_name: "a"});
 		expect(user.isValid()).toBeTruthy();
