@@ -13,11 +13,6 @@ describe("Test for type TEXT", function(){
 		user = new User();
 	});
 	
-	it("should not allow empty strings", function(){
-		user.set({first_name: ""});
-		expect(user.isValid()).toBeFalsy();
-	});
-	
 	it("should not allow numbers", function(){
 		user.set({first_name: "12345"});
 		expect(user.isValid()).toBeFalsy();
@@ -33,7 +28,16 @@ describe("Test for type TEXT", function(){
 		expect(user.isValid()).toBeFalsy();
 	});
 	
+	it("should allow empty strings", function(){
+		user.set({first_name: ""});
+		expect(user.isValid()).toBeTruthy();
+	});
 	
+	it("should allow single characters", function(){
+		user.set({first_name: "a"});
+		expect(user.isValid()).toBeTruthy();
+	});
+
 	it("should allow whitespace at the beginning of the sentence", function(){
 		user.set({first_name: "   fox"});
 		expect(user.isValid()).toBeTruthy();

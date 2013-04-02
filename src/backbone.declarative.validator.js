@@ -4,9 +4,9 @@
 	var validator = {
 
 		patterns : {
-			email : /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-			number : /^\d*$/,
-			text : /^(\s*([A-Za-z]+)\s*)+$/i
+			email : /^$|^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+			number : /^$|^\d+$/,
+			text : /^$|^(\s*([A-Za-z]+)\s*)+$/i
 		},
 
 		// One helper for each validation type
