@@ -13,9 +13,9 @@ describe("Test for type EMAIL", function(){
 		user = new User();
 	});
 	
-	it("should not allow empty strings", function(){
+	it("should allow empty strings", function(){
 		user.set({email: ""});
-		expect(user.isValid()).toBeFalsy();
+		expect(user.isValid()).toBeTruthy();
 	});
 	
 	it("should not allow only whitespace strings", function(){
@@ -25,7 +25,7 @@ describe("Test for type EMAIL", function(){
 	
 	it("should return custom error message", function(){
 		user.validates.email.msg = "This is a bogus email";
-		user.set({email: ""});
+		user.set({email: "foo"});
 		user.isValid();
 		expect(user.validationError.email.type).toEqual("This is a bogus email");
 	});
