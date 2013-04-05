@@ -32,4 +32,9 @@ describe("Test for type NUMBER", function(){
 		expect(user.isValid()).toBeTruthy();
 	});
 	
+	it("should allow decimals without a leading digit", function(){
+		user.set({balance: ".241123"});
+		expect(user.isValid()).toBeTruthy();
+	});
+	
 });
