@@ -12,7 +12,7 @@
 		// One helper for each validation type
 		helpers : {
 			type : function(source, type, pattern) {
-				source.toString().replace(/^\s+|\s+$/g, "")
+				source.toString().replace(/^\s+|\s+$/g, "");
 				if(pattern){
 					return pattern.test(source);
 				} else {
@@ -28,8 +28,18 @@
 				// Trim the string before checking for presence
 				return !!source.replace(/^\s+|\s+$/g, "") === bool;
 			},
-			length : function(source, length) {
-				return source.toString().length === length;
+			size : function(source, cond) {
+				var size,
+					pattern = /^\s*(<|>|==|<=|>=|)\s*(\d*(?:\.\d+)?)\s*$/;
+				if(!!pattern.test(cond)){
+					if (typeof source === "number" || !isNaN(parseFloat(source))) {
+						size = source; 	
+					} else if(typeof source === "string") {
+						size =  source.length;
+					}
+					return eval(size + cond);
+				}
+				return false;								
 			}
 		},
 
