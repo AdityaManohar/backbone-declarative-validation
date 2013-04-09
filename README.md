@@ -172,6 +172,14 @@ var User = Backbone.Model.extend({
 
 ```
 
+Comparisons supported by size are:
+
+* &gt;
+* &lt;
+* ==
+* &gt;=
+* &lt;= 
+
 ## Overriding Type Validation
 
 It is possible to provide a custom pattern for an existing type with the ```using``` property.
