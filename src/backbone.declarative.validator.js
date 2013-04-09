@@ -26,7 +26,7 @@
 				}
 					
 				// Trim the string before checking for presence
-				return !!source.replace(/^\s+|\s+$/g, "") === bool;
+				return !!source.toString().replace(/^\s+|\s+$/g, "") === bool;
 			},
 			size : function(source, cond) {
 				var size,

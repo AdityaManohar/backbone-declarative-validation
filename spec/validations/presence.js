@@ -33,6 +33,11 @@ describe("Test for presence", function(){
 		expect(user.isValid()).toBeFalsy();
 	});
 	
+	it("should allow numbers", function(){
+		user.set({first_name: 23});
+		expect(user.isValid()).toBeTruthy();
+	});
+	
 	it("should return default error message", function(){
 		user.set({first_name: ""});
 		user.isValid();
