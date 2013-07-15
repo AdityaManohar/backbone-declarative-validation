@@ -93,7 +93,6 @@ Validating specific types of values can be performed by setting this value for a
 * text
 * number
 * email
-* size
 
 #### text
 
@@ -148,7 +147,7 @@ var User = Backbone.Model.extend({
 
 ```
 
-#### size
+### Size
 
 This validates strings for length and numbers for magnitude. Quoted numbers are validated for magnitude and not length.
 
